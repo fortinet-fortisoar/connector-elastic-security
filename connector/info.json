@@ -1,0 +1,247 @@
+{
+    "name": "elastic-security",
+    "version": "1.0.0",
+    "label": "Elastic Security",
+    "description": "",
+    "publisher": "Communit",
+    "icon_small_name": "",
+    "icon_large_name": "",
+    "id": 50,
+    "configuration": {
+        "fields": [
+            {
+                "title": "Server URL",
+                "type": "text",
+                "name": "server_url",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "tooltip": "10.8.8.165",
+                "onchange": {}
+            },
+            {
+                "title": "Protocol",
+                "type": "select",
+                "name": "protocol",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": "https",
+                "options": [
+                    "https",
+                    "http"
+                ],
+                "onchange": {}
+            },
+            {
+                "title": "Username",
+                "type": "text",
+                "name": "username",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "tooltip": "username for elasticsecurity",
+                "onchange": {}
+            },
+            {
+                "title": "Password",
+                "type": "password",
+                "name": "password",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": null,
+                "tooltip": "password for elasticsecurity",
+                "onchange": {}
+            },
+            {
+                "title": "Port",
+                "type": "integer",
+                "name": "port",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": 9200,
+                "tooltip": "9200 is default api port",
+                "onchange": {}
+            },
+            {
+                "title": "Verify SSL",
+                "type": "checkbox",
+                "name": "verify_ssl",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": true,
+                "onchange": {}
+            }
+        ]
+    },
+    "operations": [
+        {
+            "title": "Generic Action",
+            "operation": "generic_action",
+            "description": "",
+            "parameters": [
+                {
+                    "title": "method",
+                    "type": "select",
+                    "name": "method",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "GET",
+                    "options": [
+                        "GET",
+                        "POST"
+                    ]
+                },
+                {
+                    "title": "api_endpoint",
+                    "type": "text",
+                    "name": "apiendpoint",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "",
+                    "tooltip": "/view/something"
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                },
+                {
+                    "title": "params",
+                    "type": "object",
+                    "name": "params",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                }
+            ],
+            "open": false
+        },
+        {
+            "operation": "get_status",
+            "title": "Get Status",
+            "annotation": "get_status",
+            "description": "descriptionTextField",
+            "category": "investigation",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {},
+            "open": false
+        },
+        {
+            "operation": "eql_search_api",
+            "title": "EQL Search API",
+            "annotation": "eql_search_api",
+            "description": "descriptionTextField",
+            "category": "investigation",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "target",
+                    "type": "text",
+                    "name": "target",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "",
+                    "tooltip": "sample input:\n*, _all"
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "sample input below:\n{\n  \"query\": \"process where process.name == \\\"regsvr32.exe\\\"\"\n}"
+                }
+            ],
+            "output_schema": {},
+            "open": false
+        },
+        {
+            "title": "ESQL Search API",
+            "operation": "esql_search_api",
+            "description": "",
+            "parameters": [
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "sample input below:\n{\n  \"query\": \"FROM _all | LIMIT 5\"\n}"
+                }
+            ],
+            "open": false
+        },
+        {
+            "operation": "os_query_get_saved_query",
+            "title": "OS Query Get Saved Query",
+            "annotation": "os_query_get_saved_query",
+            "description": "descriptionTextField",
+            "category": "investigation",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {},
+            "open": false
+        },
+        {
+            "operation": "os_query_create_live_query",
+            "title": "OS Query Create Live Query",
+            "annotation": "os_query_create_live_query",
+            "description": "descriptionTextField",
+            "category": "investigation",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {},
+            "open": false
+        },
+        {
+            "operation": "os_query_get_live_query_results",
+            "title": "OS Query Get Live Query Results",
+            "annotation": "os_query_get_live_query_results",
+            "description": "descriptionTextField",
+            "category": "investigation",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true,
+            "parameters": [],
+            "output_schema": {},
+            "open": false
+        }
+    ],
+    "category": [
+        ""
+    ],
+    "contributor": null,
+    "active": true,
+    "cs_compatible": true,
+    "system": false,
+    "playbook_collections": [],
+    "icon_small": "",
+    "icon_large": "",
+    "help_online": "",
+    "vendor_version": null
+}
