@@ -1,0 +1,332 @@
+{
+    "name": "elastic-security",
+    "version": "1.0.0",
+    "label": "Elastic Security",
+    "description": "Elastic Security Connector.\n\n- Product Link: <https://www.elastic.co/cloud/cloud-trial-overview/security>\n- API Doc: https://www.elastic.co/docs/api/doc/elasticsearch/",
+    "publisher": "Fortinet CSE",
+    "icon_large_name": "connector_logo_large.png",
+    "icon_small_name": "connector_logo_small.png",
+    "category": [
+        "Analytics and SIEM"
+    ],
+    "configuration": {
+        "fields": [
+            {
+                "title": "URL",
+                "type": "text",
+                "name": "url",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": "https://<elastic_host_here>:9200",
+                "validation": {
+                    "pattern": "^https?:\\/\\/(?:(?:(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9])|(?:(?:(?:(?!25?[6-9])[12]\\d|[1-9])?\\d\\.?\\b){4})|(?:(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*(?:[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9]))(?::\\d+)?$",
+                    "patternError": "Server URL must begin with https? and end without '/'. Port number can be added eg) <https://example.com:80>."
+                }
+            },
+            {
+                "title": "API Key",
+                "type": "password",
+                "name": "api_key",
+                "required": true,
+                "visible": true,
+                "editable": true
+            },
+            {
+                "title": "Verify SSL",
+                "type": "checkbox",
+                "name": "verify_ssl",
+                "required": false,
+                "visible": true,
+                "editable": true,
+                "value": true
+            }
+        ]
+    },
+    "operations": [
+        {
+            "operation": "generic_api_call",
+            "title": "Generic API call",
+            "description": "Makes API call to the given endpoint.",
+            "enabled": true,
+            "category": "",
+            "annotation": "",
+            "TEMPLATE_NOTE6": "--OUTPUT SCHEMA IS A SAMPLE RESPONSE FROM THIS CONNECTOR ACTION--",
+            "output_schema": {
+                "result": "",
+                "api_data": ""
+            },
+            "parameters": [
+                {
+                    "title": "api_endpoint",
+                    "type": "text",
+                    "name": "api_endpoint",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "",
+                    "tooltip": "Should include the whole string eg) \"/api/v1/helloworld\""
+                },
+                {
+                    "title": "method",
+                    "type": "select",
+                    "name": "method",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "GET",
+                    "options": [
+                        "GET",
+                        "PUT",
+                        "POST",
+                        "DELETE",
+                        "PATCH",
+                        "HEAD",
+                        "OPTIONS",
+                        "TRACE"
+                    ]
+                },
+                {
+                    "title": "params",
+                    "type": "object",
+                    "name": "params",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "Same as requests library \"params\" will be converted to get in URL"
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "Same as requests library \"json_data\" will be converted to get in Body"
+                },
+                {
+                    "title": "headers",
+                    "type": "object",
+                    "name": "headers",
+                    "required": false,
+                    "visible": false,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "Append value in requests headers when headers is set."
+                }
+            ]
+        },
+        {
+            "title": "Get the cluster health status",
+            "operation": "get_the_cluster_health_status",
+            "description": "",
+            "parameters": [
+                {
+                    "title": "index",
+                    "type": "text",
+                    "name": "index",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "sample input:\n*, _all",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "title": "Get EQL search results",
+            "operation": "get_eql_search_results",
+            "description": "",
+            "parameters": [
+                {
+                    "title": "index",
+                    "type": "text",
+                    "name": "index",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "sample input:\n*, _all",
+                    "value": ""
+                },
+                {
+                    "title": "query",
+                    "type": "object",
+                    "name": "query",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "sample input: {\n  \"query\": \"process where process.name == \\\"regsvr32.exe\\\"\"\n}",
+                    "value": "{\n  \"query\": \"process where process.name == \\\"regsvr32.exe\\\"\"\n}"
+                }
+            ]
+        },
+        {
+            "title": "Run an ES|QL query",
+            "operation": "run_an_esql_query",
+            "description": "",
+            "parameters": [
+                {
+                    "title": "query",
+                    "type": "object",
+                    "name": "query",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "tooltip": "sample input: {\n  \"query\": \"process where process.name == \\\"regsvr32.exe\\\"\"\n}",
+                    "value": "{\n  \"query\": \"process where process.name == \\\"regsvr32.exe\\\"\"\n}"
+                },
+                {
+                    "title": "format",
+                    "type": "select",
+                    "name": "format",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "options": [
+                        "csv",
+                        "json",
+                        "tsv",
+                        "txt",
+                        "yaml",
+                        "cbor",
+                        "smile",
+                        "arrow"
+                    ]
+                },
+                {
+                    "title": "delimiter",
+                    "type": "text",
+                    "name": "delimiter",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                },
+                {
+                    "title": "drop_null_columns",
+                    "type": "checkbox",
+                    "name": "drop_null_columns",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": false
+                },
+                {
+                    "title": "allow_partial_results",
+                    "type": "checkbox",
+                    "name": "allow_partial_results",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": false
+                }
+            ]
+        },
+        {
+            "title": "(Deprecation Warning) Generic Action",
+            "operation": "generic_action",
+            "description": "This operation is going to be deprecated after version 1.0.1\nUse 'Generic API call'",
+            "parameters": [
+                {
+                    "title": "method",
+                    "type": "select",
+                    "name": "method",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "GET",
+                    "options": [
+                        "GET",
+                        "POST"
+                    ]
+                },
+                {
+                    "title": "api_endpoint",
+                    "type": "text",
+                    "name": "apiendpoint",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "",
+                    "tooltip": "/view/something"
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                },
+                {
+                    "title": "params",
+                    "type": "object",
+                    "name": "params",
+                    "required": false,
+                    "visible": true,
+                    "editable": true,
+                    "value": null
+                }
+            ]
+        },
+        {
+            "operation": "get_status",
+            "title": "(Deprecation Warning) Get Status",
+            "description": "This operation is going to be deprecated after version 1.0.1\nUse 'Get the cluster health status'",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true
+        },
+        {
+            "operation": "eql_search_api",
+            "title": "(Deprecation Warning) EQL Search API",
+            "description": "This operation is going to be deprecated after version 1.0.1\nUse 'Get EQL search results'",
+            "is_config_required": true,
+            "visible": true,
+            "enabled": true,
+            "parameters": [
+                {
+                    "title": "target",
+                    "type": "text",
+                    "name": "target",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": "",
+                    "tooltip": "sample input:\n*, _all"
+                },
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "sample input: {\n  \"query\": \"process where process.name == \\\"regsvr32.exe\\\"\"\n}"
+                }
+            ]
+        },
+        {
+            "operation": "esql_search_api",
+            "title": "(Deprecation Warning)ESQL Search API",
+            "description": "This operation is going to be deprecated after version 1.0.1\nUse 'Run an ES|QL query'",
+            "parameters": [
+                {
+                    "title": "data",
+                    "type": "object",
+                    "name": "data",
+                    "required": true,
+                    "visible": true,
+                    "editable": true,
+                    "value": null,
+                    "tooltip": "sample input below:\n{\n  \"query\": \"FROM _all | LIMIT 5\"\n}"
+                }
+            ]
+        }
+    ]
+}
