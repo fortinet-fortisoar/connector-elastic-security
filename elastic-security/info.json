@@ -1,0 +1,432 @@
+{
+  "name": "elastic-security",
+  "version": "1.0.0",
+  "label": "Elastic Security",
+  "description": "Elastic Security provides threat prevention, detection, and response capabilities built on the Elastic Stack. It unifies SIEM, endpoint security, and cloud security in a single solution.",
+  "publisher": "Fortinet CSE",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "contributor": "Daehyeob Kim",
+  "help_online": "https://github.com/fortinet-fortisoar/connector-elastic-security/blob/release/1.0.0/docs/readme.md",
+  "icon_large_name": "large.png",
+  "icon_small_name": "small.png",
+  "category": [
+    "Analytics and SIEM"
+  ],
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server URL",
+        "description": "Specify the server URL of the Elastic server to connect and perform automated operations.",
+        "type": "text",
+        "name": "url",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "tooltip": "Specify the server URL of the Elastic server to connect and perform automated operations.",
+        "placeholder": "https://<elastic_host_here>:<port>"
+      },
+      {
+        "title": "API Key",
+        "description": "Specify the API Key to connect to the endpoint and perform automated operations",
+        "type": "password",
+        "name": "api_key",
+        "required": true,
+        "visible": true,
+        "editable": true,
+        "tooltip": "Specify the API Key to connect to the endpoint and perform automated operations"
+      },
+      {
+        "title": "Verify SSL",
+        "description": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is selected, i.e., set to true.",
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "required": false,
+        "visible": true,
+        "editable": true,
+        "value": true,
+        "tooltip": "Specifies whether the SSL certificate for the server is to be verified. By default, this option is selected, i.e., set to true."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "title": "Get Cluster Health Status",
+      "operation": "get_the_cluster_health_status",
+      "category": "investigation",
+      "description": "Retrieve the cluster health status based on the index parameter that you have specified.",
+      "annotation": "get_the_cluster_health_status",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Index",
+          "description": "Specify the index to retrieve all data streams and indices in a cluster. Possible values are _all or *",
+          "type": "text",
+          "name": "index",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the index to retrieve all data streams and indices in a cluster. Possible values are _all or *",
+          "placeholder": "For eg. *, _all"
+        }
+      ],
+      "output_schema": {
+        "status": "",
+        "timed_out": "",
+        "cluster_name": "",
+        "active_shards": "",
+        "number_of_nodes": "",
+        "relocating_shards": "",
+        "unassigned_shards": "",
+        "initializing_shards": "",
+        "number_of_data_nodes": "",
+        "active_primary_shards": "",
+        "number_of_pending_tasks": "",
+        "delayed_unassigned_shards": "",
+        "number_of_in_flight_fetch": "",
+        "unassigned_primary_shards": "",
+        "active_shards_percent_as_number": "",
+        "task_max_waiting_in_queue_millis": ""
+      }
+    },
+    {
+      "title": "Get EQL Search Results",
+      "operation": "get_eql_search_results",
+      "category": "investigation",
+      "description": "Retrieve a search results for an Event Query Language (EQL) query based on the index and query parameters you have specified.",
+      "annotation": "get_eql_search_results",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Index",
+          "description": "Specify the index to search results for an Event Query Language (EQL) query from Elastic. Possible values are _all or *",
+          "type": "text",
+          "name": "index",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the index to search results for an Event Query Language (EQL) query from Elastic. Possible values are _all or *",
+          "placeholder": "For eg. *, _all"
+        },
+        {
+          "title": "Query",
+          "description": "Specify the EQL query to search results from Elastic.",
+          "type": "object",
+          "name": "query",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the EQL query to search results from Elastic.",
+          "value": {
+            "query": "process where process.name : \"*.exe\""
+          }
+        }
+      ],
+      "output_schema": {
+        "hits": {
+          "total": {
+            "value": "",
+            "relation": ""
+          },
+          "events": [
+            {
+              "_id": "",
+              "_index": "",
+              "_source": {
+                "user.name": "",
+                "@timestamp": "",
+                "process.pid": "",
+                "event.action": "",
+                "process.name": "",
+                "event.category": "",
+                "process.parent.name": ""
+              }
+            }
+          ]
+        },
+        "took": "",
+        "timed_out": "",
+        "is_partial": "",
+        "is_running": ""
+      }
+    },
+    {
+      "title": "Run an ES|QL Query",
+      "operation": "run_an_esql_query",
+      "category": "investigation",
+      "description": "Retrieve a search results for an ES|QL (Elasticsearch query language) query from Elastic based on the query and other input parameters you have specified.",
+      "annotation": "run_an_esql_query",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Query",
+          "description": "Specify the ES|QL query to search results from Elastic.",
+          "type": "object",
+          "name": "query",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the ES|QL query to search results from Elastic.",
+          "value": {
+            "query": "FROM metrics-fleet_server.agent_status-default | LIMIT 10"
+          }
+        },
+        {
+          "title": "Format",
+          "description": "Select the format by which to search results. You can choose from the following options: CSV, JSON, TSV, TXT, YAML, CBOR, Smile, or Arrow.",
+          "type": "select",
+          "name": "format",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "options": [
+            "CSV",
+            "JSON",
+            "TSV",
+            "TXT",
+            "YAML",
+            "CBOR",
+            "Smile",
+            "Arrow"
+          ],
+          "tooltip": "Select the format by which to search results. You can choose from the following options: CSV, JSON, TSV, TXT, YAML, CBOR, Smile, or Arrow."
+        },
+        {
+          "title": "Delimiter",
+          "description": "Specify the delimiter to use between values within a CSV row. Note: Only valid for the CSV format.",
+          "type": "text",
+          "name": "delimiter",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the delimiter to use between values within a CSV row. Note: Only valid for the CSV format."
+        },
+        {
+          "title": "Remove Empty Columns",
+          "description": "If enabled, columns that contain only null values are excluded from the results. By default, this is false. When true, the response also includes an all_columns section listing every column name.",
+          "type": "checkbox",
+          "name": "drop_null_columns",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "If enabled, columns that contain only null values are excluded from the results. By default, this is false. When true, the response also includes an all_columns section listing every column name.",
+          "value": false
+        },
+        {
+          "title": "Allow Partial Results",
+          "description": "If true, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards. If false, the query will fail if there are any failures. By default, this is false.",
+          "type": "checkbox",
+          "name": "allow_partial_results",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "If true, partial results will be returned if there are shard failures, but the query can continue to execute on other clusters and shards. If false, the query will fail if there are any failures. By default, this is false.",
+          "value": false
+        }
+      ],
+      "output_schema": {
+        "took": "",
+        "values": [],
+        "columns": [
+          {
+            "name": "",
+            "type": ""
+          }
+        ],
+        "is_partial": "",
+        "values_loaded": "",
+        "documents_found": ""
+      }
+    },
+    {
+      "operation": "generic_api_call",
+      "title": "Execute an API Request",
+      "description": "Sends an API request to an API endpoint based on specified HTTP method, endpoint, and other input parameters that you have specified, enabling flexible API interactions tailored to user needs.",
+      "category": "investigation",
+      "annotation": "generic_api_call",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "HTTP Method",
+          "description": "Select an HTTP action for the request. You can select from the following options: \n\nGET \n\nPUT \n\nPOST \n\nDELETE \n\nPATCH \n\nHEAD \n\nOPTIONS \n\nTRACE",
+          "type": "select",
+          "name": "method",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": "GET",
+          "options": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE",
+            "PATCH",
+            "HEAD",
+            "OPTIONS",
+            "TRACE"
+          ]
+        },
+        {
+          "title": "Endpoint",
+          "description": "Specify the target API URL path for the request. For example, if the website is https://example.com and URL path is https://example.com/images/pic.jpg, the endpoint would be /images/pic.jpg.",
+          "type": "text",
+          "name": "api_endpoint",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the target API URL path for example: /_cluster/health/_all"
+        },
+        {
+          "title": "Query Parameters",
+          "description": "(Optional) Specify any optional parameters to add to the URL and refine the request.",
+          "type": "object",
+          "name": "params",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "(Optional) Specify any optional parameters to add to the URL and refine the request."
+        },
+        {
+          "title": "Request Payload",
+          "description": "(Optional) Specify data, as JSON, to be sent as the request payload (typically for POST or PUT requests).",
+          "type": "object",
+          "name": "json_data",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "(Optional) Specify data, as JSON, to be sent as the request payload (typically for POST or PUT requests)."
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "title": "(Deprecation Warning) Get Status",
+      "operation": "get_status",
+      "description": "Retrieve the health status from Elastic Security",
+      "category": "investigation",
+      "annotation": "get_status",
+      "is_config_required": true,
+      "visible": true,
+      "enabled": true,
+      "parameters": [],
+      "output_schema": {}
+    },
+    {
+      "title": "(Deprecation Warning) EQL Search API",
+      "operation": "eql_search_api",
+      "description": "Retrieve a search results for an Event Query Language (EQL) query based on the index and query parameters you have specified.",
+      "category": "investigation",
+      "annotation": "eql_search_api",
+      "is_config_required": true,
+      "visible": true,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Index",
+          "description": "Specify the index to search results for an Event Query Language (EQL) query from Elastic. Possible values are _all or *",
+          "type": "text",
+          "name": "target",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the index to search results for an Event Query Language (EQL) query from Elastic. Possible values are _all or *"
+        },
+        {
+          "title": "Query",
+          "description": "Specify the EQL query to search results from Elastic.",
+          "type": "object",
+          "name": "data",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the EQL query to search results from Elastic.",
+          "value": {
+            "query": "process where process.name : \"*.exe\""
+          }
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "title": "(Deprecation Warning) ESQL Search API",
+      "operation": "esql_search_api",
+      "description": "Retrieve a search results for an ES|QL (Elasticsearch query language) query from Elastic based on the query and other input parameters you have specified.",
+      "category": "investigation",
+      "annotation": "esql_search_api",
+      "visible": true,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Query",
+          "description": "Specify the ES|QL query to search results from Elastic.",
+          "type": "object",
+          "name": "data",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the ES|QL query to search results from Elastic.",
+          "value": {
+            "query": "FROM metrics-fleet_server.agent_status-default | LIMIT 10"
+          }
+        }
+      ],
+      "output_schema": {}
+    },
+    {
+      "title": "(Deprecation Warning) Generic Action",
+      "operation": "generic_action",
+      "description": "Sends an API request to an API endpoint based on specified HTTP method, endpoint, and other input parameters that you have specified, enabling flexible API interactions tailored to user needs.",
+      "category": "investigation",
+      "annotation": "generic_action",
+      "visible": true,
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "HTTP Method",
+          "description": "Select an HTTP action for the request. You can select from the following options: \n\nGET \n\nPOST",
+          "type": "select",
+          "name": "method",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": "GET",
+          "options": [
+            "GET",
+            "POST"
+          ]
+        },
+        {
+          "title": "Endpoint",
+          "description": "Specify the target API URL path for the request. For example, if the website is https://example.com and URL path is https://example.com/images/pic.jpg, the endpoint would be /images/pic.jpg.",
+          "type": "text",
+          "name": "apiendpoint",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the target API URL path for example: /_cluster/health/_all"
+        },
+        {
+          "title": "Request Payload",
+          "description": "(Optional) Specify data, as JSON, to be sent as the request payload (typically for POST requests).",
+          "type": "object",
+          "name": "data",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "(Optional) Specify data, as JSON, to be sent as the request payload (typically for POST requests)."
+        },
+        {
+          "title": "Query Parameters",
+          "description": "(Optional) Specify any optional parameters to add to the URL and refine the request.",
+          "type": "object",
+          "name": "params",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "tooltip": "(Optional) Specify any optional parameters to add to the URL and refine the request."
+        }
+      ],
+      "output_schema": {}
+    }
+  ]
+}

@@ -1,7 +1,12 @@
+"""
+Copyright start
+MIT License
+Copyright (c) 2025 Fortinet Inc
+Copyright end
+"""
+
 import requests
 import json
-import warnings
-import functools
 from typing import Literal, Optional, Union
 
 
@@ -28,18 +33,20 @@ class CustomConnector:
             return None
         elif isinstance(_d, list):
             return _d
+        elif isinstance(_d, str):
+            return None
         return {k: v for k, v in _d.items() if v is not None}
 
     def _check_health(self):
         return self.health_check()
 
     def generic_api_call(
-        self,
-        method: Literal["GET", "PUT", "POST", "DELETE", "PATCH", "HEAD", "OPTIONS", "TRACE"],
-        api_endpoint: str,
-        headers: Optional[dict] = None,
-        params: Optional[dict] = None,
-        json_data: Optional[dict] = None,   
+            self,
+            method: Literal["GET", "PUT", "POST", "DELETE", "PATCH", "HEAD", "OPTIONS", "TRACE"],
+            api_endpoint: str,
+            headers: Optional[dict] = None,
+            params: Optional[dict] = None,
+            json_data: Optional[dict] = None,
     ) -> dict:
         self._check_api_endpoint(api_endpoint)
         url = self.url + api_endpoint
@@ -52,7 +59,8 @@ class CustomConnector:
         params_new = self._delete_none_dict(params)
         json_data_new = self._delete_none_dict(json_data)
 
-        resp = requests.request(method, url, headers=headers, params=params_new, json=json_data_new, verify=self.verify_ssl)
+        resp = requests.request(method, url, headers=headers, params=params_new, json=json_data_new,
+                                verify=self.verify_ssl)
         return resp.json()
 
     def health_check(self) -> dict:
@@ -70,43 +78,43 @@ class CustomConnector:
         - API Documentation: <https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-eql-search>
         """
         endpoint = f"/{index}/_eql/search"
-        json_data = {"query": query}
+        # json_data = {"query": query}
 
-        return self.generic_api_call("POST", endpoint, json_data=json_data)
+        return self.generic_api_call("POST", endpoint, json_data=query)
 
     def run_an_esql_query(
-        self,
-        query: dict,
-        format: Optional[Literal["csv", "json", "tsv", "txt", "yaml", "cbor", "smile", "arrow"]] = None,
-        delimiter: Optional[str] = None,
-        drop_null_columns: Optional[bool] = None,
-        allow_partial_results: Optional[bool] = None,
+            self,
+            query: dict,
+            format: Optional[Literal["CSV", "JSON", "TSV", "TXT", "YAML", "CBOR", "Smile", "Arrow"]] = None,
+            delimiter: Optional[str] = None,
+            drop_null_columns: Optional[bool] = None,
+            allow_partial_results: Optional[bool] = None,
     ) -> dict:
         """Run an ES|QL query
         - API Documentation: <https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-esql-query>
         """
         endpoint = f"/_query"
         params = {
-            "format": format,
-            "delimiter": delimiter,
-            "drop_null_columns": drop_null_columns,
-            "allow_partial_results": allow_partial_results,
+            "format": format.lower() if format else '',
+            "delimiter": delimiter if delimiter else '',
+            "drop_null_columns": "true" if drop_null_columns else "false",
+            "allow_partial_results": "true" if allow_partial_results else "false",
         }
 
-        json_data = {"query": query}
-
-        return self.generic_api_call("POST", endpoint, params=params, json_data=json_data)
+        # json_data = {"query": query}
+        params = {k: v for k, v in params.items() if v is not None and v != ''}
+        return self.generic_api_call("POST", endpoint, params=params, json_data=query)
 
     # ------------------- Below functions are going to be deprecated in the newer version of connector. ------------------------------------------------------------------------------------------------
     # Will be deprecated in version 1.0.1
 
     # TODO Deprecation Warning: "This operation is going to be deprecated after version 1.0.1\nUse generic_api_call"
     def generic_action(
-        self,
-        method: Literal["GET", "PUT", "POST", "DELETE", "PATCH", "HEAD", "OPTIONS", "TRACE"],
-        apiendpoint: str,
-        params: dict,
-        data: dict,
+            self,
+            method: Literal["GET", "PUT", "POST", "DELETE", "PATCH", "HEAD", "OPTIONS", "TRACE"],
+            apiendpoint: str,
+            params: dict,
+            data: dict,
     ):
         return self.generic_api_call(method, apiendpoint, params=params, json_data=data)
 

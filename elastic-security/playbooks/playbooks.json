@@ -1,0 +1,385 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - Elastic Security - 1.0.0",
+      "description": "Sample playbooks for \"Elastic Security\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
+      "visible": true,
+      "image": null,
+      "uuid": "a669ad79-e6ec-4448-b47e-5c159dc37aac",
+      "id": 363,
+      "deletedAt": null,
+      "importedBy": [],
+      "recordTags": [
+        "Elastic",
+        "elastic-security"
+      ],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Run an ES|QL Query",
+          "aliasName": null,
+          "tag": "#Elastic Security",
+          "description": "Retrieve a search results for an ES|QL (Elasticsearch query language) query from Elastic based on the query and other input parameters you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1760353177,
+          "collection": "/api/3/workflow_collections/a669ad79-e6ec-4448-b47e-5c159dc37aac",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/058bade9-51fd-4fe1-959f-0dfc81ac93f4",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Run an ES QL Query",
+              "description": null,
+              "arguments": {
+                "name": "Elastic Security",
+                "config": "b53927b1-f067-4ce4-b18d-36cc39e7c0b4",
+                "params": {
+                  "query": "{\n  \"query\": \"FROM metrics-fleet_server.agent_status-default | LIMIT 10\"\n}",
+                  "format": "JSON",
+                  "delimiter": "",
+                  "drop_null_columns": false,
+                  "allow_partial_results": false
+                },
+                "version": "1.0.0",
+                "connector": "elastic-security",
+                "operation": "run_an_esql_query",
+                "operationTitle": "Run an ES|QL Query",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "1bc17386-3d27-4180-be2b-73f9d6f11f6a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "058bade9-51fd-4fe1-959f-0dfc81ac93f4"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Run an ES QL Query",
+              "targetStep": "/api/3/workflow_steps/1bc17386-3d27-4180-be2b-73f9d6f11f6a",
+              "sourceStep": "/api/3/workflow_steps/058bade9-51fd-4fe1-959f-0dfc81ac93f4",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "298020f3-7c23-40e3-a6f0-16230b8240c6"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "playbookOrigin": "/api/3/picklists/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+          "isEditable": true,
+          "uuid": "589536b1-6432-4ade-8200-9cc6e77272e0",
+          "id": 5169,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "Elastic",
+            "elastic-security"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get EQL Search Results",
+          "aliasName": null,
+          "tag": "#Elastic Security",
+          "description": "Retrieve a search results for an Event Query Language (EQL) query based on the index and query parameters you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1760419051,
+          "collection": "/api/3/workflow_collections/a669ad79-e6ec-4448-b47e-5c159dc37aac",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/e4541e6a-af0c-4c43-9e41-7df555dfaa1d",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get EQL Search Results",
+              "description": null,
+              "arguments": {
+                "name": "Elastic Security",
+                "config": "b53927b1-f067-4ce4-b18d-36cc39e7c0b4",
+                "params": {
+                  "index": "search-fsr",
+                  "query": "{\n  \"query\": \"process where process.name : \\\"*.exe\\\"\"\n}"
+                },
+                "version": "1.0.0",
+                "connector": "elastic-security",
+                "operation": "get_eql_search_results",
+                "operationTitle": "Get EQL Search Results",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "cc69a7fa-751f-42db-b9c4-ed7ce522f9d4"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "e4541e6a-af0c-4c43-9e41-7df555dfaa1d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Get EQL Search Results",
+              "targetStep": "/api/3/workflow_steps/cc69a7fa-751f-42db-b9c4-ed7ce522f9d4",
+              "sourceStep": "/api/3/workflow_steps/e4541e6a-af0c-4c43-9e41-7df555dfaa1d",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "d26b3c90-3976-41ea-a604-17099973ec2f"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "playbookOrigin": "/api/3/picklists/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+          "isEditable": true,
+          "uuid": "a7bc9801-42f3-4a74-96da-9899d9720512",
+          "id": 5168,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "Elastic",
+            "elastic-security"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Cluster Health Status",
+          "aliasName": null,
+          "tag": "#Elastic Security",
+          "description": "Retrieve the cluster health status based on the index parameter that you have specified.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1760419135,
+          "collection": "/api/3/workflow_collections/a669ad79-e6ec-4448-b47e-5c159dc37aac",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/111987f9-d484-44f7-a4b5-e4b439b09f5a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Cluster Health Status",
+              "description": null,
+              "arguments": {
+                "name": "Elastic Security",
+                "config": "b53927b1-f067-4ce4-b18d-36cc39e7c0b4",
+                "params": {
+                  "index": "_all"
+                },
+                "version": "1.0.0",
+                "connector": "elastic-security",
+                "operation": "get_the_cluster_health_status",
+                "operationTitle": "Get Cluster Health Status",
+                "step_variables": []
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "70a98d72-43ae-4255-86d1-1f3fdf768bd5"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "111987f9-d484-44f7-a4b5-e4b439b09f5a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start-> Get Cluster Health Status",
+              "targetStep": "/api/3/workflow_steps/70a98d72-43ae-4255-86d1-1f3fdf768bd5",
+              "sourceStep": "/api/3/workflow_steps/111987f9-d484-44f7-a4b5-e4b439b09f5a",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "acf81817-7a23-400e-bb97-2571480cbd24"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "playbookOrigin": "/api/3/picklists/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+          "isEditable": true,
+          "uuid": "d5d7a62b-0f54-4cd5-b809-ac855d80abd4",
+          "id": 5167,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "Elastic",
+            "elastic-security"
+          ]
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Execute an API Request",
+          "aliasName": null,
+          "tag": "#Elastic Security",
+          "description": "Sends an API request to an API endpoint based on specified HTTP method, endpoint, and other input parameters that you have specified, enabling flexible API interactions tailored to user needs.",
+          "isActive": false,
+          "debug": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "lastModifyDate": 1760417904,
+          "collection": "/api/3/workflow_collections/a669ad79-e6ec-4448-b47e-5c159dc37aac",
+          "versions": [],
+          "triggerStep": "/api/3/workflow_steps/57e2ba1f-664c-40c8-9ec7-25f47fefce7a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Execute an API Request",
+              "description": null,
+              "arguments": {
+                "name": "Elastic Security",
+                "config": "b53927b1-f067-4ce4-b18d-36cc39e7c0b4",
+                "params": {
+                  "method": "POST",
+                  "params": "{\n  \"format\": \"json\"\n}",
+                  "json_data": "{\n  \"query\": \"FROM metrics-fleet_server.agent_status-default | LIMIT 10\"\n}",
+                  "api_endpoint": "/_query"
+                },
+                "version": "1.0.0",
+                "connector": "elastic-security",
+                "operation": "generic_api_call",
+                "operationTitle": "Execute an API Request",
+                "pickFromTenant": false,
+                "step_variables": []
+              },
+              "status": null,
+              "top": "165",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "group": null,
+              "uuid": "83b9f025-54cb-4bba-a8a1-766b31a76348"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "step_variables": {
+                  "input": {
+                    "params": []
+                  }
+                }
+              },
+              "status": null,
+              "top": "30",
+              "left": "125",
+              "stepType": "/api/3/workflow_step_types/b348f017-9a94-471f-87f8-ce88b6a7ad62",
+              "group": null,
+              "uuid": "57e2ba1f-664c-40c8-9ec7-25f47fefce7a"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "name": "Start -> Execute an API Request",
+              "targetStep": "/api/3/workflow_steps/83b9f025-54cb-4bba-a8a1-766b31a76348",
+              "sourceStep": "/api/3/workflow_steps/57e2ba1f-664c-40c8-9ec7-25f47fefce7a",
+              "label": null,
+              "isExecuted": false,
+              "group": null,
+              "uuid": "86701d83-0a0e-4bbb-a675-9ccbe8df2584"
+            }
+          ],
+          "groups": [],
+          "priority": null,
+          "playbookOrigin": "/api/3/picklists/15c1e8c9-22bf-4e66-8fbb-0a502d4a4a3f",
+          "isEditable": true,
+          "uuid": "ebff2b95-e0ea-4031-b7d0-b3d6c99ac884",
+          "id": 5170,
+          "owners": [],
+          "isPrivate": false,
+          "deletedAt": null,
+          "importedBy": [],
+          "recordTags": [
+            "Elastic",
+            "elastic-security"
+          ]
+        }
+      ]
+    }
+  ],
+  "exported_tags": [
+    "Elastic",
+    "elastic-security"
+  ]
+}
